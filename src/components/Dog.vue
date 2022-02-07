@@ -1,11 +1,16 @@
 <template>
   <div>
-
-    <main>
-      <router-view></router-view>
-    </main>
+    <RandomDogList/>
   </div>
 </template>
+
+<script>
+import RandomDogList from './components/RandomDogList.vue';
+export default {
+  name: 'App',
+  components:{RandomDogList}
+}
+</script>
 
 <style>
 #app {

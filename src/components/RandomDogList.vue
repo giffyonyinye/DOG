@@ -1,30 +1,39 @@
 <template>
-    <div>
+    <div class="main">
         <div>
-      <input type="text" name="search" id="search" placeholder="search for dogs" v-model="searchBreeds">
-      <button @click="dogList">GO</button>
-    </div>
-        Dogs are man best friend.
+            <input type="text" name="search" id="search" placeholder="search for dogs" style="padding:.5rem; border-radius:1rem" v-model="searchBreeds">
+            <button @click="dogList">GO</button>
+        </div>
 
-        <div v-for="dog in dogs" :key="dog" >
-            <div  style="dog-list">
-                <img style="width:10%; height:10%"  :src="dog" alt="dogs">
+        <div v-show="showSearchResult"  style="display:flex; flex-wrap:wrap; justify-content: space-evenly;  ">
+            <div  v-for="dog in dogs" :key="dog" >
+                <img style="width:20rem; height:20rem; margin-top:2rem; border-radius:1rem" :src="dog" alt="dogs" loading="lazy">
             </div>
+        </div>
+
+        <div v-show="dogLists">
+            <DogList/>
         </div>
         
     </div>
+
+    
 </template>
 
 <script>
 import axios from 'axios';
+import DogList from './DogList.vue';
 import {baseUrl} from '../config';
-const url = baseUrl
+const url = baseUrl;
 export default {
+    components:{DogList},
     data() {
         return {
             dogs: [],
             breeds: [],
-            searchBreeds:""
+            searchBreeds:"",
+            showSearchResult: false,
+            dogLists: true
         }
     },
 
@@ -59,6 +68,8 @@ export default {
             })
             .then((res) => {
                 this.dogs = res.data.message;
+                this.dogLists = false
+                this.showSearchResult = true;
             })
 
         },
@@ -83,8 +94,9 @@ export default {
 
 <style scoped>
 .dog-list {
+    width:100%;
     display:flex;
-    justify-content: space-evenly;
-    flex-wrap: nowrap;
+    flex-flow: row nowrap;
+    border: 1px solid black;
 }
 </style>
