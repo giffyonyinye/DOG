@@ -39,7 +39,7 @@ export default {
             })
             .then((res) => {
                 let dog = res.data.message;
-                let dogArray = dog.slice(0,99)
+                let dogArray = dog.slice(0,99);
                 localStorage.setItem("dogList", JSON.stringify(dogArray));
             })
             .catch((err) => {

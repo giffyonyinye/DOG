@@ -59,10 +59,10 @@ export default {
         filteredBreed() {
             if(this.searchBreed) {
                return this.allBreeds.filter((breed) => {
-                   return breed.toLowerCase().includes(this.searchBreed.toLowerCase())
-                })
+                   return breed.toLowerCase().includes(this.searchBreed.toLowerCase());
+                });
             } else {
-                return this.allBreeds
+                return this.allBreeds;
             }
         },
     },
@@ -79,7 +79,7 @@ export default {
             .then((res) => {
                 let breed = res.data.message;
                 let breeds = Object.keys(breed);
-                this.$store.dispatch("allBreeds", breeds)
+                this.$store.dispatch("allBreeds", breeds);
             })
 
         },
@@ -95,7 +95,7 @@ export default {
             })
             .then((res) => {
                 let searchResult = res.data.message;
-                this.dogLists = false
+                this.dogLists = false;
                 this.showSearchResult = true;
                 this.$store.dispatch("searchResult", searchResult);
             })
