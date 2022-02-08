@@ -1,5 +1,6 @@
 <template>
     <div>
+        <!-- THIS IS THE LIST OF DOGS AND ALSO SHOWS DOG INFORMATION WHEN CLICKED -->
         <div  style="display:flex; flex-wrap:wrap; justify-content: space-evenly;  ">
             <router-link :to="{name: 'dogInfo', params: {id:index, image:dog}}" v-for="(dog,index) in this.$store.state.dogList" :key="dog" >
                 <img style="width:20rem; height:20rem; margin-top:2rem; border-radius:1rem" :src="dog" alt="dogs" loading="lazy">

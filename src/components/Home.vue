@@ -1,20 +1,23 @@
 <template>
     <div class="main">
+        <!-- THIS IS THE SEARCH BAR AND ITS FUNCTIONALITY -->
         <div class="header">
             <input @click="isVisible = !isVisible" type="text" name="search" id="search" placeholder="search for dogs"  v-model="searchBreed">
             <div v-if="isVisible" class="search-result">
-                <div  v-for="breed in filteredBreed" :key="breed"> 
+                <div @click="isVisible = !isVisible" v-for="breed in filteredBreed" :key="breed"> 
                     <p @click="dogList(breed)">{{breed}}</p>
                 </div>
             </div>
         </div>
 
+    <!-- THIS SHOWS THE SEARCH RESULTS OF ANY BREED SEARCHED FOR -->
         <div v-show="showSearchResult"  style="display:flex; flex-wrap:wrap; justify-content: space-evenly; " >
             <router-link :to="{name: 'dogInfo', params: {id:index, image:dog}}"  v-for="(dog,index) in dogs" :key="dog" >
                 <img style="width:20rem; height:20rem; margin-top:2rem; border-radius:1rem" :src="dog" alt="dogs" loading="lazy">
             </router-link>
         </div>
 
+        <!-- THIS SHOWS LIST OF DOG BY DEFAULT WHEN URL IS VISITED -->
         <div v-show="dogLists">
             <DogList :breedName="searchBreed"/>
         </div>

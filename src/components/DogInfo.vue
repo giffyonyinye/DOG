@@ -1,4 +1,5 @@
 <template>
+<!-- THIS SHOWS DOG INFORMATION -->
   <div class="dog-info">
     <img :src="image" alt="dog">
     <p>{{breedName}}</p>
