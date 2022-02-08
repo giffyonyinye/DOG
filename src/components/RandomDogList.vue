@@ -1,19 +1,18 @@
 <template>
     <div class="main">
         <div class="header">
-            <input @click="isVisible = !isVisible" type="text" name="search" id="search" placeholder="search for dogs"  v-model="searchBreeds">
+            <input @click="isVisible = !isVisible" type="text" name="search" id="search" placeholder="search for dogs"  v-model="searchBreed">
             <div v-if="isVisible" class="search-result">
                 <div  v-for="breed in filteredBreed" :key="breed"> 
-                    <p @click="dogList">{{breed}}</p>
+                    <p @click="dogList(breed)">{{breed}}</p>
                 </div>
             </div>
-            <button @click="dogList">GO</button>
         </div>
 
         <div v-show="showSearchResult"  style="display:flex; flex-wrap:wrap; justify-content: space-evenly; " >
-            <div  v-for="dog in dogs" :key="dog" >
+            <router-link :to="{name: 'dogInfo', params: {id:index, image:dog}}"  v-for="(dog,index) in dogs" :key="dog" >
                 <img style="width:20rem; height:20rem; margin-top:2rem; border-radius:1rem" :src="dog" alt="dogs" loading="lazy">
-            </div>
+            </router-link>
         </div>
 
         <div v-show="dogLists">
@@ -36,7 +35,7 @@ export default {
     data() {
         return {
             dogs: [],
-            searchBreeds:"",
+            searchBreed:"",
             selectedItem : null,
             isVisible : false,
             showSearchResult: false,
@@ -55,8 +54,8 @@ export default {
     computed: {
         ...mapState(["allBreeds"]),
         filteredBreed() {
-            const query = this.searchBreeds.toLowerCase()
-            if(this.searchBreeds) {
+             const query = this.searchBreed.toLowerCase()
+            if(this.searchBreed) {
                return this.allBreeds.filter((breed) => {
                      return Object.values(breed).some((word) => String(word).toLowerCase().includes(query))
                 })
@@ -67,10 +66,13 @@ export default {
     },
 
     methods : {
-        dogList() {
+        onSearch(event) {
+            this.searchBreeds = event.target.value
+        },
+        dogList(breed) {
             axios({
                 method: "GET",
-                url: `${url}/breed/${this.searchBreeds}/images`,
+                url: `${url}/breed/${breed}/images`,
                 headers: {
                     'Content-type': 'application/json'
                 }

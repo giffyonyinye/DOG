@@ -1,7 +1,7 @@
 <template>
     <div>
         <div  style="display:flex; flex-wrap:wrap; justify-content: space-evenly;  ">
-            <router-link to="/dogInfo" v-for="dog in this.$store.state.dogList" :key="dog" >
+            <router-link :to="{name: 'dogInfo', params: {id:index, image:dog}}" v-for="(dog,index) in this.$store.state.dogList" :key="dog" >
                 <img style="width:20rem; height:20rem; margin-top:2rem; border-radius:1rem" :src="dog" alt="dogs" loading="lazy">
             </router-link>
         </div>
@@ -28,23 +28,23 @@ export default {
     methods: {
 
         dogList() {
-                axios({
-                    method: "GET",
-                    url: `${url}/breed/${this.allBreeds[10]}/images`,
-                    headers: {
-                        'Content-type': 'application/json'
-                    }
-                })
-                .then((res) => {
-                    let dog = res.data.message;
-                    let dogArray = dog.slice(0,99)
-                    localStorage.setItem("dogList", JSON.stringify(dogArray));
-                })
-                .catch((err) => {
-                    console.log(err);
-                })
-    
-            },
+            axios({
+                method: "GET",
+                url: `${url}/breed/${this.allBreeds[10]}/images`,
+                headers: {
+                    'Content-type': 'application/json'
+                }
+            })
+            .then((res) => {
+                let dog = res.data.message;
+                let dogArray = dog.slice(0,99)
+                localStorage.setItem("dogList", JSON.stringify(dogArray));
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+
+        },
     }
 }
 </script>

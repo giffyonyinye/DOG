@@ -1,12 +1,8 @@
 import {createRouter, createWebHistory} from "vue-router";
-import RandomDogList from './components/RandomDogList';
-import DogInfo from './components/DogInfo';
-
-
 
 const routes = [
-    {path: '/', name: 'dogList', component: RandomDogList},
-    {path: '/dogInfo', name: 'dogInfo', component: DogInfo},
+    {path: '/', name: 'dogList', component:() => import("./components/RandomDogList.vue")},
+    {path: '/dogInfo:id', name: 'dogInfo', component:() => import("./components/DogInfo.vue"), props:true},
     
 ]
 
