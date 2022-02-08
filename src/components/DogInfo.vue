@@ -38,8 +38,8 @@ export default {
     height: 30rem;
 }
 @media only screen and (max-width: 600px) {
-  .dog-info {
-    width: 95%;
+  .dog-info img{
+    width: 80%;
   }
 }
 </style>
