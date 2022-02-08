@@ -130,6 +130,9 @@ export default {
 
 .search-result{
     overflow:auto; 
-    height:20rem
+    height:20rem;
+    width: 50%;
+    margin: auto;
+    background: white;
 }
 </style>
