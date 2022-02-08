@@ -16,7 +16,7 @@
         </div>
 
         <div v-show="dogLists">
-            <DogList/>
+            <DogList :breedName="searchBreed"/>
         </div>
         
     </div>
@@ -54,21 +54,18 @@ export default {
     computed: {
         ...mapState(["allBreeds"]),
         filteredBreed() {
-             const query = this.searchBreed.toLowerCase()
+            //  const query = this.searchBreed.toLowerCase()
             if(this.searchBreed) {
                return this.allBreeds.filter((breed) => {
-                     return Object.values(breed).some((word) => String(word).toLowerCase().includes(query))
+                   return breed.toLowerCase().includes(this.searchBreed.toLowerCase())
                 })
-            }  else {
+            } else {
                 return this.allBreeds
             }
         },
     },
 
     methods : {
-        onSearch(event) {
-            this.searchBreeds = event.target.value
-        },
         dogList(breed) {
             axios({
                 method: "GET",

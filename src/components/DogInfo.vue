@@ -2,13 +2,14 @@
   <div class="dog-info">
     <img :src="image" alt="dog">
     <p>{{breedName}}</p>
+    <p>{{id}}</p>
   </div>
 </template>
 
 <script>
 import { mapState } from "vuex";
 export default {
-    props:["id", "image"],
+    props:["id", "image", "breedName"],
   data() {
     return {
     };

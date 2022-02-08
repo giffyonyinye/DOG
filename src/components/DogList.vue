@@ -15,6 +15,7 @@ import {baseUrl} from '../config';
 const url = baseUrl;
 import { mapState } from "vuex";
 export default {
+    props:["breedName"],
     mounted() {
         this.dogList();
         var dogList = JSON.parse(localStorage.getItem("dogList"));
