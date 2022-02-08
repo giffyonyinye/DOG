@@ -40,6 +40,7 @@ export default {
             .then((res) => {
                 let dog = res.data.message;
                 let dogArray = dog.slice(0,99);
+                this.$store.dispatch("dogList", dogArray);
                 localStorage.setItem("dogList", JSON.stringify(dogArray));
             })
             .catch((err) => {
