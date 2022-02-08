@@ -10,11 +10,12 @@
 <script>
 import { mapState } from "vuex";
 export default {
-    props:["id", "image", "breedName"],
-  data() {
-    return {
-    };
-  },
+    props:[
+        "id", 
+        "image",
+         "breedName"
+    ],
+
   computed: {
     ...mapState(["allBreeds"])
   },

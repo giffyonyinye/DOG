@@ -61,7 +61,6 @@ export default {
     computed: {
         ...mapState(["allBreeds", "searchResult"]),
         filteredBreed() {
-            //  const query = this.searchBreed.toLowerCase()
             if(this.searchBreed) {
                return this.allBreeds.filter((breed) => {
                    return breed.toLowerCase().includes(this.searchBreed.toLowerCase())
