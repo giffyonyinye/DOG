@@ -2,6 +2,11 @@
     <div class="main">
         <div>
             <input type="text" name="search" id="search" placeholder="search for dogs" style="padding:.5rem; border-radius:1rem" v-model="searchBreeds">
+            <div v-show="showBreedList">
+                <div  v-for="breed in breeds" :key="breed"> 
+                    {{breed}}
+                </div>
+            </div>
             <button @click="dogList">GO</button>
         </div>
 
@@ -33,7 +38,8 @@ export default {
             breeds: [],
             searchBreeds:"",
             showSearchResult: false,
-            dogLists: true
+            dogLists: true,
+            showBreedList: false
         }
     },
 
@@ -56,7 +62,12 @@ export default {
     },
 
     methods : {
-         
+        onSearch(event) {
+            this.showBreedList = true
+            this.searchBreeds = event.target.value,
+            console.log(this.searchBreeds);
+            this.filterName()
+        },
         dogList() {
            
             axios({
@@ -83,8 +94,8 @@ export default {
                 }
             })
             .then((res) => {
-                this.breeds = res.data.message;
-                console.log(this.breeds);
+                let breed = res.data.message;
+                this.breeds = Object.keys(breed)
             })
 
         }

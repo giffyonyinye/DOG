@@ -1,7 +1,7 @@
 <template>
     <div>
         <div  style="display:flex; flex-wrap:wrap; justify-content: space-evenly;  ">
-            <div  v-for="dog in dogs" :key="dog" >
+            <div  v-for="dog in this.$store.state.dogList" :key="dog" >
                 <img style="width:20rem; height:20rem; margin-top:2rem; border-radius:1rem" :src="dog" alt="dogs" loading="lazy">
             </div>
         </div>
@@ -13,12 +13,6 @@ import axios from 'axios';
 import {baseUrl} from '../config';
 const url = baseUrl;
 export default {
-    data() {
-        return {
-            dogs: []
-        }
-    },
-
     mounted() {
         this.dogList();
     },
@@ -36,7 +30,11 @@ export default {
                 })
                 .then((res) => {
                     let dog = res.data.message;
-                    this.dogs = dog.slice(0,99)
+                    let dogArray = dog.slice(0,99)
+                    this.$store.dispatch("dogList", dogArray)
+                })
+                .catch((err) => {
+                    console.log(err);
                 })
     
             },
