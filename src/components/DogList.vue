@@ -21,6 +21,7 @@ export default {
         this.dogList();
         var dogList = JSON.parse(localStorage.getItem("dogList"));
         this.$store.dispatch("dogList", dogList);
+        this.$store.dispatch("breedName", this.allBreeds[0]);
     },
 
     computed: {

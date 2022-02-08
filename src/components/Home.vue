@@ -1,7 +1,7 @@
 <template>
     <div class="main">
         <!-- THIS IS THE SEARCH BAR AND ITS FUNCTIONALITY -->
-        <div class="header" @click="isVisible = !isVisible">
+        <div class="header">
             <div>
                 <input @click="isVisible = !isVisible" type="text" name="search" id="search" placeholder="search for dogs"  v-model="searchBreed">
             </div>
@@ -39,9 +39,7 @@ export default {
     components:{DogList},
     data() {
         return {
-            dogs: [],
             searchBreed:"",
-            selectedItem : null,
             isVisible : false,
             showSearchResult: false,
             dogLists: true,
@@ -54,8 +52,6 @@ export default {
     mounted() {
       this.dogList();
       this.getAllBreeds();
-      var dogList = JSON.parse(localStorage.getItem("searchResult"));
-        this.$store.dispatch("searchResult", dogList)
     },
 
     computed: {
@@ -73,6 +69,7 @@ export default {
 
     methods : {
         dogList(breed) {
+            this.$store.dispatch("breedName", breed);
             axios({
                 method: "GET",
                 url: `${url}/breed/${breed}/images`,
@@ -84,7 +81,7 @@ export default {
                 let searchResult = res.data.message;
                 this.dogLists = false
                 this.showSearchResult = true;
-                localStorage.setItem("searchResult", JSON.stringify(searchResult));
+                this.$store.dispatch("searchResult", searchResult);
             })
 
         },

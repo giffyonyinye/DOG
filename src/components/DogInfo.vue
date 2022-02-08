@@ -1,9 +1,8 @@
 <template>
 <!-- THIS SHOWS DOG INFORMATION -->
   <div class="dog-info">
-    <img :src="image" alt="dog">
-    <p>{{breedName}}</p>
-    <p>{{id}}</p>
+    <img :src="breedImage" alt="dog">
+    <p>{{this.$store.state.breedName}}</p>
   </div>
 </template>
 
@@ -13,11 +12,17 @@ export default {
     props:[
         "id", 
         "image",
-         "breedName"
     ],
+    data() {
+        return {
+            images : localStorage.setItem("image", this.image),
+            breedImage : localStorage.getItem("image")
+        }
+    },
+    
 
   computed: {
-    ...mapState(["allBreeds"])
+    ...mapState(["allBreeds"], "breedName")
   },
   
 };

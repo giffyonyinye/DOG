@@ -6,7 +6,9 @@ const store =  createStore({
     state: {
        dogList: [],
        allBreeds: [],
-       searchResult: []
+       searchResult: [],
+       breedName: "",
+       searchedBreedName: ""
     },
 
     mutations: {
@@ -21,6 +23,12 @@ const store =  createStore({
         searchResult(state, payload) {
             state.searchResult = payload;
         },
+        breedName(state, payload) {
+            state.breedName = payload;
+        },
+        searchedBreedName(state, payload) {
+            state.searchedBreedName = payload;
+        },
     }, 
 
     actions: {
@@ -34,6 +42,12 @@ const store =  createStore({
 
         searchResult({commit}, payload) {
             commit('searchResult', payload)
+        },
+        breedName({commit}, payload) {
+            commit('breedName', payload)
+        },
+        searchedBreedName({commit}, payload) {
+            commit('searchedBreedName', payload)
         },
     },
 
