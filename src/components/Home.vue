@@ -13,10 +13,15 @@
         </div>
 
     <!-- THIS SHOWS THE SEARCH RESULTS OF ANY BREED SEARCHED FOR -->
-        <div v-show="showSearchResult"  style="display:flex; flex-wrap:wrap; justify-content: space-evenly; " >
-            <router-link :to="{name: 'dogInfo', params: {id:index, image:dog}}"  v-for="(dog,index) in searchResult" :key="dog" >
-                <img style="width:20rem; height:20rem; margin-top:2rem; border-radius:1rem" :src="dog" alt="dogs" loading="lazy">
-            </router-link>
+        <div v-show="showSearchResult"  >
+            <div style="margin-top:2rem; color:#2c3e50">
+                <i v-if="isLoading" class="fa fa-spinner">Loading ........</i>
+            </div>
+            <div style="display:flex; flex-wrap:wrap; justify-content: space-evenly; " >
+                <router-link :to="{name: 'dogInfo', params: {id:index, image:dog}}"  v-for="(dog,index) in searchResult" :key="dog" >
+                    <img style="width:20rem; height:20rem; margin-top:2rem; border-radius:1rem" :src="dog" alt="dogs" loading="lazy">
+                </router-link>
+            </div>
         </div>
 
         <!-- THIS SHOWS LIST OF DOG BY DEFAULT WHEN URL IS VISITED -->
@@ -43,7 +48,8 @@ export default {
             isVisible : false,
             showSearchResult: false,
             dogLists: true,
-            showBreedList: false
+            showBreedList: false,
+            isLoading:false,
         }
     },
 
@@ -86,6 +92,7 @@ export default {
 
         dogList(breed) {
             this.$store.dispatch("breedName", breed);
+            this.isLoading = true;
             axios({
                 method: "GET",
                 url: `${url}/breed/${breed}/images`,
@@ -98,6 +105,7 @@ export default {
                 this.dogLists = false;
                 this.showSearchResult = true;
                 this.$store.dispatch("searchResult", searchResult);
+                this.isLoading = false;
             })
 
         }

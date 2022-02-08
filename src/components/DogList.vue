@@ -1,5 +1,8 @@
 <template>
     <div>
+        <div style="margin-top:2rem; color:#2c3e50">
+            <i v-if="isLoading" class="fa fa-spinner">Loading ........</i>
+        </div>
         <!-- THIS IS THE LIST OF DOGS AND ALSO SHOWS DOG INFORMATION WHEN CLICKED -->
         <div  style="display:flex; flex-wrap:wrap; justify-content: space-evenly;  ">
             <router-link :to="{name: 'dogInfo', params: {id:index, image:dog}}" v-for="(dog,index) in this.$store.state.dogList" :key="dog" >
@@ -13,9 +16,16 @@
 import axios from 'axios';
 import {baseUrl} from '../config';
 const url = baseUrl;
+
 import { mapState } from "vuex";
 export default {
     props:["breedName"],
+    data() {
+        return {
+            isLoading: false,
+
+        }
+    },
 
     mounted() {
         this.dogList();
@@ -25,14 +35,16 @@ export default {
     },
 
     computed: {
-    ...mapState(["allBreeds"])
+    ...mapState(["allBreeds"]),
+
   },
 
     methods: {
         dogList() {
+            this.isLoading = true;
             axios({
                 method: "GET",
-                url: `${url}/breed/${this.allBreeds[10]}/images`,
+                url: `${url}/breed/bulldog/images`,
                 headers: {
                     'Content-type': 'application/json'
                 }
@@ -41,6 +53,7 @@ export default {
                 let dog = res.data.message;
                 let dogArray = dog.slice(0,99);
                 localStorage.setItem("dogList", JSON.stringify(dogArray));
+                this.isLoading = false;
             })
             .catch((err) => {
                 console.log(err);
