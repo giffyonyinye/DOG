@@ -139,7 +139,7 @@ export default {
 
 .search-result{
     overflow:auto; 
-    height:20rem;
+    height:10rem;
     width: 50%;
     margin: auto;
     background: white;
