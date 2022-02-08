@@ -6,7 +6,7 @@ import DogInfo from './components/DogInfo';
 
 const routes = [
     {path: '/', name: 'dogList', component: RandomDogList},
-    {path: '/dogInfo', name: 'dogs', component: DogInfo},
+    {path: '/dogInfo', name: 'dogInfo', component: DogInfo},
     
 ]
 

@@ -1,9 +1,9 @@
 <template>
     <div>
         <div  style="display:flex; flex-wrap:wrap; justify-content: space-evenly;  ">
-            <div  v-for="dog in this.$store.state.dogList" :key="dog" >
+            <router-link to="/dogInfo" v-for="dog in this.$store.state.dogList" :key="dog" >
                 <img style="width:20rem; height:20rem; margin-top:2rem; border-radius:1rem" :src="dog" alt="dogs" loading="lazy">
-            </div>
+            </router-link>
         </div>
     </div>
 </template>
@@ -11,16 +11,18 @@
 <script>
 import axios from 'axios';
 import {baseUrl} from '../config';
+
 const url = baseUrl;
 export default {
     mounted() {
         this.dogList();
+        var dogList = JSON.parse(localStorage.getItem("dogList"));
+        this.$store.dispatch("dogList", dogList)
     },
 
     methods: {
 
         dogList() {
-               
                 axios({
                     method: "GET",
                     url: `${url}/breed/hound/images`,
@@ -31,7 +33,7 @@ export default {
                 .then((res) => {
                     let dog = res.data.message;
                     let dogArray = dog.slice(0,99)
-                    this.$store.dispatch("dogList", dogArray)
+                    localStorage.setItem("dogList", JSON.stringify(dogArray));
                 })
                 .catch((err) => {
                     console.log(err);

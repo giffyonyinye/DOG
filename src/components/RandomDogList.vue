@@ -1,16 +1,16 @@
 <template>
     <div class="main">
-        <div>
-            <input type="text" name="search" id="search" placeholder="search for dogs" style="padding:.5rem; border-radius:1rem" v-model="searchBreeds">
-            <div v-show="showBreedList">
-                <div  v-for="breed in breeds" :key="breed"> 
-                    {{breed}}
+        <div class="header">
+            <input @click="isVisible = !isVisible" type="text" name="search" id="search" placeholder="search for dogs"  v-model="searchBreeds">
+            <div v-if="isVisible">
+                <div  v-for="breed in filteredBreed" :key="breed"> 
+                    <p @click="dogList">{{breed}}</p>
                 </div>
             </div>
             <button @click="dogList">GO</button>
         </div>
 
-        <div v-show="showSearchResult"  style="display:flex; flex-wrap:wrap; justify-content: space-evenly;  ">
+        <div v-show="showSearchResult"  style="display:flex; flex-wrap:wrap; justify-content: space-evenly; " >
             <div  v-for="dog in dogs" :key="dog" >
                 <img style="width:20rem; height:20rem; margin-top:2rem; border-radius:1rem" :src="dog" alt="dogs" loading="lazy">
             </div>
@@ -37,6 +37,8 @@ export default {
             dogs: [],
             breeds: [],
             searchBreeds:"",
+            selectedItem : null,
+            isVisible : false,
             showSearchResult: false,
             dogLists: true,
             showBreedList: false
@@ -49,25 +51,19 @@ export default {
     },
 
     computed: {
-        filterName() {
+        filteredBreed() {
             const query = this.searchBreeds.toLowerCase()
-            if(this.searchQuery) {
-               return this.getAllBreeds.filter((theUser) => {
-                     return Object.values(theUser).some((word) => String(word).toLowerCase().includes(query))
+            if(this.searchBreeds) {
+               return this.breeds.filter((breed) => {
+                     return Object.values(breed).some((word) => String(word).toLowerCase().includes(query))
                 })
             }  else {
-                return this.getAllBreeds
+                return this.breeds
             }
         },
     },
 
     methods : {
-        onSearch(event) {
-            this.showBreedList = true
-            this.searchBreeds = event.target.value,
-            console.log(this.searchBreeds);
-            this.filterName()
-        },
         dogList() {
            
             axios({
@@ -109,5 +105,26 @@ export default {
     display:flex;
     flex-flow: row nowrap;
     border: 1px solid black;
+}
+.main{
+    background: white;
+}
+.header {
+    background: #2c3e50;
+    padding: 3rem;
+}
+
+.header input {
+    width: 50%;
+    outline: none;
+    padding: 1rem;
+    border-radius:.5rem ;
+    border: 1px solid grey;
+}
+.header button{
+    outline: none;
+    padding: 1rem;
+    border-radius:.5rem ;
+    border: 1px solid grey;
 }
 </style>
