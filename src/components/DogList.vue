@@ -19,8 +19,8 @@ export default {
 
     mounted() {
         this.dogList();
-        var dogList = JSON.parse(localStorage.getItem("dogList"));
-        this.$store.dispatch("dogList", dogList);
+        // var dogList = JSON.parse(localStorage.getItem("dogList"));
+        // this.$store.dispatch("dogList", dogList);
         this.$store.dispatch("breedName", this.allBreeds[0]);
     },
 
@@ -41,7 +41,7 @@ export default {
                 let dog = res.data.message;
                 let dogArray = dog.slice(0,99);
                 this.$store.dispatch("dogList", dogArray);
-                localStorage.setItem("dogList", JSON.stringify(dogArray));
+                // localStorage.setItem("dogList", JSON.stringify(dogArray));
             })
             .catch((err) => {
                 console.log(err);
