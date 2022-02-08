@@ -8,11 +8,9 @@
 <script>
 import { mapState } from "vuex";
 export default {
-    props:["id", "image", "breedName"],
+    props:["id", "image"],
   data() {
     return {
-      breed: localStorage.getItem("breedName"),
-      imageUrl: ""
     };
   },
   computed: {
@@ -32,7 +30,7 @@ export default {
     height: 30rem;
 }
 @media only screen and (max-width: 600px) {
-  .card {
+  .dog-info {
     width: 95%;
   }
 }

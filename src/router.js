@@ -1,7 +1,7 @@
 import {createRouter, createWebHistory} from "vue-router";
 
 const routes = [
-    {path: '/', name: 'dogList', component:() => import("./components/RandomDogList.vue")},
+    {path: '/', name: 'dogList', component:() => import("./components/Home.vue")},
     {path: '/dogInfo:id', name: 'dogInfo', component:() => import("./components/DogInfo.vue"), props:true},
     
 ]
