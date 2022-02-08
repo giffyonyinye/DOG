@@ -1,7 +1,7 @@
 <template>
     <div class="main">
         <!-- THIS IS THE SEARCH BAR AND ITS FUNCTIONALITY -->
-        <div class="header">
+        <div class="header" @click="isVisible = !isVisible">
             <div>
                 <input @click="isVisible = !isVisible" type="text" name="search" id="search" placeholder="search for dogs"  v-model="searchBreed">
             </div>
