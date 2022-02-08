@@ -50,8 +50,8 @@ export default {
     
 
     mounted() {
-      this.dogList();
-      this.getAllBreeds();
+        this.getAllBreeds();
+        this.dogList();
     },
 
     computed: {
@@ -68,6 +68,22 @@ export default {
     },
 
     methods : {
+         getAllBreeds() {
+            axios({
+                method: "GET",
+                url: `${url}/breeds/list/all`,
+                headers: {
+                    'Content-type': 'application/json'
+                }
+            })
+            .then((res) => {
+                let breed = res.data.message;
+                let breeds = Object.keys(breed);
+                this.$store.dispatch("allBreeds", breeds)
+            })
+
+        },
+
         dogList(breed) {
             this.$store.dispatch("breedName", breed);
             axios({
@@ -82,22 +98,6 @@ export default {
                 this.dogLists = false
                 this.showSearchResult = true;
                 this.$store.dispatch("searchResult", searchResult);
-            })
-
-        },
-
-        getAllBreeds() {
-            axios({
-                method: "GET",
-                url: `${url}/breeds/list/all`,
-                headers: {
-                    'Content-type': 'application/json'
-                }
-            })
-            .then((res) => {
-                let breed = res.data.message;
-                let breeds = Object.keys(breed);
-                this.$store.dispatch("allBreeds", breeds)
             })
 
         }
