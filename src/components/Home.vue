@@ -2,7 +2,9 @@
     <div class="main">
         <!-- THIS IS THE SEARCH BAR AND ITS FUNCTIONALITY -->
         <div class="header">
-            <input @click="isVisible = !isVisible" type="text" name="search" id="search" placeholder="search for dogs"  v-model="searchBreed">
+            <div>
+                <input @click="isVisible = !isVisible" type="text" name="search" id="search" placeholder="search for dogs"  v-model="searchBreed">
+            </div>
             <div v-if="isVisible" class="search-result">
                 <div @click="isVisible = !isVisible" v-for="breed in filteredBreed" :key="breed"> 
                     <p @click="dogList(breed)">{{breed}}</p>
@@ -12,14 +14,14 @@
 
     <!-- THIS SHOWS THE SEARCH RESULTS OF ANY BREED SEARCHED FOR -->
         <div v-show="showSearchResult"  style="display:flex; flex-wrap:wrap; justify-content: space-evenly; " >
-            <router-link :to="{name: 'dogInfo', params: {id:index, image:dog}}"  v-for="(dog,index) in dogs" :key="dog" >
+            <router-link :to="{name: 'dogInfo', params: {id:index, image:dog}}"  v-for="(dog,index) in searchResult" :key="dog" >
                 <img style="width:20rem; height:20rem; margin-top:2rem; border-radius:1rem" :src="dog" alt="dogs" loading="lazy">
             </router-link>
         </div>
 
         <!-- THIS SHOWS LIST OF DOG BY DEFAULT WHEN URL IS VISITED -->
         <div v-show="dogLists">
-            <DogList :breedName="searchBreed"/>
+            <DogList/>
         </div>
         
     </div>
@@ -52,10 +54,12 @@ export default {
     mounted() {
       this.dogList();
       this.getAllBreeds();
+      var dogList = JSON.parse(localStorage.getItem("searchResult"));
+        this.$store.dispatch("searchResult", dogList)
     },
 
     computed: {
-        ...mapState(["allBreeds"]),
+        ...mapState(["allBreeds", "searchResult"]),
         filteredBreed() {
             //  const query = this.searchBreed.toLowerCase()
             if(this.searchBreed) {
@@ -78,9 +82,10 @@ export default {
                 }
             })
             .then((res) => {
-                this.dogs = res.data.message;
+                let searchResult = res.data.message;
                 this.dogLists = false
                 this.showSearchResult = true;
+                localStorage.setItem("searchResult", JSON.stringify(searchResult));
             })
 
         },

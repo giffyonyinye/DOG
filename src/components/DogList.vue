@@ -20,7 +20,7 @@ export default {
     mounted() {
         this.dogList();
         var dogList = JSON.parse(localStorage.getItem("dogList"));
-        this.$store.dispatch("dogList", dogList)
+        this.$store.dispatch("dogList", dogList);
     },
 
     computed: {
