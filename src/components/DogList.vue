@@ -13,6 +13,7 @@ import axios from 'axios';
 import {baseUrl} from '../config';
 
 const url = baseUrl;
+import { mapState } from "vuex";
 export default {
     mounted() {
         this.dogList();
@@ -20,12 +21,16 @@ export default {
         this.$store.dispatch("dogList", dogList)
     },
 
+    computed: {
+    ...mapState(["allBreeds"])
+  },
+
     methods: {
 
         dogList() {
                 axios({
                     method: "GET",
-                    url: `${url}/breed/hound/images`,
+                    url: `${url}/breed/${this.allBreeds[10]}/images`,
                     headers: {
                         'Content-type': 'application/json'
                     }

@@ -30,12 +30,12 @@ import axios from 'axios';
 import DogList from './DogList.vue';
 import {baseUrl} from '../config';
 const url = baseUrl;
+import {mapState} from 'vuex';
 export default {
     components:{DogList},
     data() {
         return {
             dogs: [],
-            breeds: [],
             searchBreeds:"",
             selectedItem : null,
             isVisible : false,
@@ -45,27 +45,29 @@ export default {
         }
     },
 
+    
+
     mounted() {
       this.dogList();
       this.getAllBreeds();
     },
 
     computed: {
+        ...mapState(["allBreeds"]),
         filteredBreed() {
             const query = this.searchBreeds.toLowerCase()
             if(this.searchBreeds) {
-               return this.breeds.filter((breed) => {
+               return this.allBreeds.filter((breed) => {
                      return Object.values(breed).some((word) => String(word).toLowerCase().includes(query))
                 })
             }  else {
-                return this.breeds
+                return this.allBreeds
             }
         },
     },
 
     methods : {
         dogList() {
-           
             axios({
                 method: "GET",
                 url: `${url}/breed/${this.searchBreeds}/images`,
@@ -91,7 +93,8 @@ export default {
             })
             .then((res) => {
                 let breed = res.data.message;
-                this.breeds = Object.keys(breed)
+                let breeds = Object.keys(breed);
+                this.$store.dispatch("allBreeds", breeds)
             })
 
         }
