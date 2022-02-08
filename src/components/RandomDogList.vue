@@ -2,7 +2,7 @@
     <div class="main">
         <div class="header">
             <input @click="isVisible = !isVisible" type="text" name="search" id="search" placeholder="search for dogs"  v-model="searchBreeds">
-            <div v-if="isVisible">
+            <div v-if="isVisible" class="search-result">
                 <div  v-for="breed in filteredBreed" :key="breed"> 
                     <p @click="dogList">{{breed}}</p>
                 </div>
@@ -126,5 +126,10 @@ export default {
     padding: 1rem;
     border-radius:.5rem ;
     border: 1px solid grey;
+}
+
+.search-result{
+    overflow:auto; 
+    height:20rem
 }
 </style>
